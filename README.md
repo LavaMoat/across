@@ -79,7 +79,7 @@ Without `document.currentScript` telling script A really sent a certain message 
 
 All of the above are not enough. In fact they all are the enablers for securely and hermatically allow SSC to shape all windows in the web app in such a way that allows the core values to be enforced.
 
-That is achieved by tracking scripts that change their own src programmatically and prevent them from participating in the SSC, 
+That is achieved by tracking scripts that change their own src dynamically and prevent them from participating in the SSC, 
 because if they had that option they could have changed their own src to impersonate a different script and by that break the core values.
 
 That way, a script can only participate in the SSC if:
