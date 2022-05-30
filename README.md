@@ -12,7 +12,7 @@ This capability obviously already exists (by reading/writing from/to `window`), 
 
 ## Usage
 
-Once you register your `onmessage` callback, you'll get a function that can be used to send messages to other scripts within the web app:
+Once you register your `onmessage` callback by calling the `document.onmessage()` API by SSC, you'll get a `postMessage` function that can be used to send messages to other scripts within the web app:
 
 ### receive message example
 
