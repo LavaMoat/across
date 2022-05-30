@@ -10,6 +10,45 @@ This capability obviously already exists (by reading/writing from/to `window`), 
 2. It makes sure that a message passed on from script A to script B **was not tampered** by any other entity.
 3. It makes sure that a message passed on from script A to script B **was not read** by any other entity.
 
+## Usage
+
+Once you register your `onmessage` callback, you'll get a function that can be used to send messages to other scripts within the web app:
+
+### receive message example
+
+```html
+<script src="https://x.com/script-a.js">
+  (function(){
+    const postMessage = document.onmessage((src, msg) => {
+        if (src !== 'htts://y.com/script-b.js') {
+          console.log('message is not really from "script-b.js"');
+          return;
+        }
+        console.log('got a message from "' + src + '" : ', msg);
+    });
+  }())
+</script>
+```
+
+### send message example
+
+```html
+<script src="https://y.com/script-b.js">
+  (function(){
+    const postMessage = document.onmessage((src, msg) => {
+      // do nothing    
+    });
+    setTimeout(() => {
+        postMessage('https://x.com/script-a.js', 'hi A, this is B!');
+    }, 30);
+  }())
+</script>
+```
+
+Due to security limitations, registering a script to send and recieve messages from other scripts can only be done before DOM is loaded (that's when `document.currentScript` API is still relevant).
+
+## SSC Technically Explained
+
 This model is a solution that is based on a combination of multiple strong capabilities:
 
 ### Securely
