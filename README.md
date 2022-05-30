@@ -74,3 +74,26 @@ Read more about [Glazier](https://github.com/weizman/glazier) to better understa
 
 SSC uses the native browser API `document.currentScript` to verify a script is really who it claims to be.
 Without `document.currentScript` telling script A really sent a certain message and not another script that impersonates it would have been impossible.
+
+### disable script src property reseting
+
+All of the above are not enough. In fact they all are the enablers for securely and hermatically allow SSC to shape all windows in the web app in such a way that allows the core values to be enforced.
+
+That is achieved by tracking scripts that change their own src programmatically and prevent them from participating in the SSC, 
+because if they had that option they could have changed their own src to impersonate a different script and by that break the core values.
+
+That way, a script can only participate in the SSC if:
+
+1. it was loaded via `html`:
+
+```html
+<script src="https://x.com/script-a.js"></script>
+```
+
+2. or if it uses the SSC extension for `document.createElement` API to create its script (if you must create your script dynamically):
+
+```javascript
+const script = document.createElement('script', 'https://x.com/script-a.js');
+// or incase you want to use the @options argument, this will also work:
+const script = document.createElement('script', {}, 'https://x.com/script-a.js');
+```
