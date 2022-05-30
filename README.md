@@ -12,6 +12,14 @@ This capability obviously already exists (by reading/writing from/to `window`), 
 
 ## Usage
 
+In order for SSC to apply within the web app, implement a script tag that loads it at the beginning of the webpage similarly to this:
+
+```html
+<script src="./ssc.prod.js"></script>
+```
+
+Make sure this runs first - any javascript that runs before the SSC can easily break the SSC from securely working!
+
 Once you register your `onmessage` callback by calling the `document.onmessage()` API by SSC, you'll get a `postMessage` function that can be used to send messages to other scripts within the web app:
 
 ### receive message example
