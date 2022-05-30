@@ -97,3 +97,5 @@ const script = document.createElement('script', 'https://x.com/script-a.js');
 // or incase you want to use the @options argument, this will also work:
 const script = document.createElement('script', {}, 'https://x.com/script-a.js');
 ```
+
+This infect allows SSC to actually enforce its core values - a script that wishes to send/recieve messages can only do so if its current src property was at no point changed. That is the only way to tell a script was truly loaded by its current src property.
