@@ -6,6 +6,6 @@
         postMessage(getSrc('legit'), 'PING');
         setTimeout(() => {
             done('GOT NO MESSAGES');
-        }, 30);
+        }, 300000);
     }, 30);
 }())

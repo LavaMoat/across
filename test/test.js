@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
-const ssc = fs.readFileSync(path.join(__dirname, '../ssc.prod.js')).toString();
+const ssc = fs.readFileSync(path.join(__dirname, '../ssc.js')).toString();
 const html = fs.readFileSync(path.join(__dirname, './index.html')).toString();
 
 const app = express();
@@ -62,7 +62,7 @@ describe('test communication works', async () => {
         await test('set-attribute-named-item', 'GOT MESSAGE FROM SCRIPT "set-attribute-named-item" : PONG');
     });
 
-    it('should fail to impersonate script legit by attempting to change current script src attribute node value via setNamedItemNS()', async () => {
+    it.only('should fail to impersonate script legit by attempting to change current script src attribute node value via setNamedItemNS()', async () => {
         await test('set-attribute-named-item-ns', 'GOT MESSAGE FROM SCRIPT "set-attribute-named-item-ns" : PONG');
     });
 });

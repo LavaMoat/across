@@ -1,3 +1,5 @@
+let domLoaded = false;
+
 function isStringScript(str) {
     return typeof str === 'string' && str.toLowerCaseS() === 'script';
 }
@@ -27,11 +29,15 @@ function hook(win, securely, prototype, property, cb) {
     const type = desc.set ? 'set' : 'value';
     const value = desc[type];
     desc[type] = function(a, b, c) {
-        const that = this;
-        const block = securely(() => !!document.currentScriptS && cb.call(that, a, b, c));
-        if (!block) {
-            return value.call(this, a, b, c);
+        if (!domLoaded) {
+            const that = this;
+            domLoaded = domLoaded || !document.currentScriptS;
+            const block = securely(() => cb.call(that, a, b, c));
+            if (block) {
+                return;
+            }
         }
+        return value.call(this, a, b, c);
     }
     securely(() => win.ObjectS.defineProperty(prototype, property, desc));
 }

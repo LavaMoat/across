@@ -859,6 +859,8 @@ module.exports = function init() {
 
 function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
+var domLoaded = false;
+
 function isStringScript(str) {
   return typeof str === 'string' && str.toLowerCaseS() === 'script';
 }
@@ -887,14 +889,19 @@ function hook(win, securely, prototype, property, cb) {
   var value = desc[type];
 
   desc[type] = function (a, b, c) {
-    var that = this;
-    var block = securely(function () {
-      return !!document.currentScriptS && cb.call(that, a, b, c);
-    });
+    if (!domLoaded) {
+      var that = this;
+      domLoaded = domLoaded || !document.currentScriptS;
+      var block = securely(function () {
+        return cb.call(that, a, b, c);
+      });
 
-    if (!block) {
-      return value.call(this, a, b, c);
+      if (block) {
+        return;
+      }
     }
+
+    return value.call(this, a, b, c);
   };
 
   securely(function () {
