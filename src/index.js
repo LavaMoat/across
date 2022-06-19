@@ -23,11 +23,7 @@ function onmessage(cb) {
 
         return function postMessage(dst, msg) {
             const cb = scriptCB[dst];
-            if (cb) {
-                cb(src, msg);
-                return true;
-            }
-            return false;
+            return cb && cb(src, msg);
         };
     });
 }
