@@ -825,13 +825,7 @@ function onmessage(cb) {
 
     return function postMessage(dst, msg) {
       var cb = scriptCB[dst];
-
-      if (cb) {
-        cb(src, msg);
-        return true;
-      }
-
-      return false;
+      return cb && cb(src, msg);
     };
   });
 }
