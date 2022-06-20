@@ -1,0 +1,16 @@
+<html>
+<head>
+    <script>
+        function getName(src) {
+            return src.split('/')[4].replace('.js', '');
+        }
+        function getSrc(name) {
+            return location.origin + '/scripts/' + name + '.js';
+        }
+    </script>
+    <script src="/ssc.js"></script>
+    <script>top.SSC()</script>
+    <script src="./scripts/main.js"></script>
+    <script src="./scripts/{{ INJECT }}.js"></script>
+</head>
+</html>
