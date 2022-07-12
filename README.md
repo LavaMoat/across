@@ -6,9 +6,11 @@ This capability obviously already exists (by reading/writing from/to `window`), 
 
 ## Core Values
 
-1. It makes sure that a message passed on from script A to script B **really did came from script A** and not any other entity.
-2. It makes sure that a message passed on from script A to script B **was not tampered** by any other entity.
-3. It makes sure that a message passed on from script A to script B **was not read** by any other entity.
+SSC makes sure that a message passed on from script A to script B
+
+1. **really did come from the sender script** and not any other entity.
+2. **was not tampered** by any other entity.
+3. **was not read** by any other entity.
 
 ## Usage
 
