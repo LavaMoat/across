@@ -194,6 +194,59 @@ that must be correctly understood in order to use `Across` safely.
 Refer to the [usage section](https://github.com/weizman/across/blob/master/README.md#usage)
 to understand how to correctly consume and use `Across`.
 
+## `Across` Technically Explained
+
+This model is a solution that is based on a combination of multiple strong capabilities:
+
+### Securely
+
+Securely allows `Across` to execute native javascript operations without worrying about them being hijacked by a malicious entity in runtime.
+Such hijack can easily harm `Across` ecosystem and allow a malicious entity to break any one of `Across` core values.
+
+Read more about [Securely](https://github.com/weizman/securely) to better understand how it works.
+
+### Snow
+
+`Across` applies itself in the window when it first comes up, in order to create a state within the page that allows the core values to actually exist.
+If a malicious entity gets to run code before `Across` init, it can break `Across`'s core values - `Across` must execute first.
+Furthermore, `Across` running first in the top window is not enough - it must do so in every new window that is born within the web app, otherwise
+any malicious entity can use iframe native functionalities to bypass `Across`'s core values and eventually break it.
+
+In order to apply itself within every newborn window, `Across` uses Snow which does exactly that - provided a certain callback, Snow will
+make sure to execute that callback within every newborn window in the web app (in our case, apply `Across`).
+
+Read more about [Snow](https://github.com/weizman/snow) to better understand how it works.
+
+### document.currentScript
+
+`Across` uses the native browser API `document.currentScript` to verify a script is really who it claims to be.
+Without `document.currentScript` telling script A really sent a certain message and not another script that impersonates it would have been impossible.
+
+### disable script src property resetting
+
+All of the above are not enough. In fact, they all are the enablers for securely and hermetically allow `Across` to shape all windows in the web app in such a way that allows the core values to be enforced.
+
+That is achieved by tracking scripts that change their own src dynamically and prevent them from participating in `Across`,
+because if they had that option they could have changed their own src to impersonate a different script and by that break the core values.
+
+That way, a script can only participate in `Across` if:
+
+1. it was loaded via `html`:
+
+```html
+<script src="https://x.com/script-a.js"></script>
+```
+
+2. or if it uses `Across` extension for `document.createElement` API to create its script (if you must create your script dynamically):
+
+```javascript
+const script = document.createElement('script', 'https://x.com/script-a.js');
+// or incase you want to use the @options argument, this will also work:
+const script = document.createElement('script', {}, 'https://x.com/script-a.js');
+```
+
+This in fact allows `Across` to actually enforce its core values - a script that wishes to send/receive messages can only do so if its current src property was at no point changed. That is the only way to tell a script was truly loaded by its current src property.
+
 ## Unlocking possibilities with `Across`
 
 Or in other words - why unlocking secure scripts communication is exciting?
