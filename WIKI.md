@@ -143,7 +143,7 @@ different technologies that together allow `Across` to exist and provide full se
 The most important API `Across` relies on is [document.currentScript](https://developer.mozilla.org/en-US/docs/Web/API/Document/currentScript).
 This is because it is the only reliable way to tell the origin of the script that wishes to send messages.
 
-In addition to `Across` using `document.currentScript`, it also uses [Glazier](https://github.com/weizman/glazier-mm) 
+In addition to `Across` using `document.currentScript`, it also uses [Snow](https://github.com/weizman/snow-mm) 
 to make sure `Across` is applied within any newborn window within the webpage, 
 otherwise attackers can use them to bypass `Across` protocol.
 
@@ -289,11 +289,11 @@ are still some reasons why `Across` is not production ready:
 1. Browsers Support - All efforts went toward making sure `Across` works smoothly with no errors on Chromium
 based browsers, it was not tested on Firefox/Safari. Help with applying support in these to this
 project is needed.
-2. Performance - In order for `Across` to stay secured it uses Glazier. Currently, in order for 
-Glazier to remain fully secure, it harms the performance significantly. This is something
-that the Glazier project can use a lot of help with, but until then, Glazier harms the 
+2. Performance - In order for `Across` to stay secured it uses Snow. Currently, in order for 
+Snow to remain fully secure, it harms the performance significantly. This is something
+that the Snow project can use a lot of help with, but until then, Snow harms the 
 performance in some websites (there will be however a version of `Across` for extensions 
-that will not have to use Glazier and by that will cut performance almost entirely, 
+that will not have to use Snow and by that will cut performance almost entirely, 
 but it will serve extension products only)
 3. Security - `Across` is worthless if it's not fully secure. What mainly lead this project was to make sure
 it is hermetically secured, so it is very safe to use. 

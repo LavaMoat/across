@@ -1,4 +1,4 @@
-const glaze = require('../../glazier/src/index');
+const glaze = require('@weizman/snow');
 const protect = require('./protect');
 
 let securely;
