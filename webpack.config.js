@@ -6,7 +6,7 @@ module.exports = {
     mode: 'production',
     output: {
       path: `${__dirname}`,
-      filename: 'ssc.js',
+      filename: 'across.js',
     },
     module: {
         rules: [

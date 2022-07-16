@@ -1,7 +1,7 @@
 {
-  "name": "ssc",
+  "name": "across",
   "version": "1.0.0",
-  "description": "ssc",
+  "description": "across",
   "main": "src/index.js",
   "devDependencies": {
     "express": "4.17.2",
@@ -26,13 +26,13 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weizman/ssc.git"
+    "url": "git+https://github.com/weizman/across.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/weizman/ssc/issues"
+    "url": "https://github.com/weizman/across/issues"
   },
-  "homepage": "https://weizman.github.io/ssc-website/"
+  "homepage": "https://weizman.github.io/across-website/"
 }

@@ -1025,7 +1025,7 @@ var __webpack_exports__ = {};
 
 
 (function (win) {
-  Object.defineProperty(win, 'SSC', {
+  Object.defineProperty(win, 'ACROSS', {
     value: (_src_index__WEBPACK_IMPORTED_MODULE_0___default())
   });
 })(window);

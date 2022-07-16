@@ -2,7 +2,7 @@ const fs = require('fs');
 const path = require('path');
 const express = require('express');
 
-const ssc = fs.readFileSync(path.join(__dirname, '../ssc.prod.js')).toString();
+const across = fs.readFileSync(path.join(__dirname, '../across.prod.js')).toString();
 const html = fs.readFileSync(path.join(__dirname, './index.html')).toString();
 
 const app = express();
@@ -10,7 +10,7 @@ const port = 3232;
 
 function setup() {
     app.use(express.static('test'));
-    app.get('/ssc.js', (req, res) => res.send(ssc));
+    app.get('/across.js', (req, res) => res.send(across));
     app.get('/:script', (req, res) => res.send(html.replace('{{ INJECT }}', req.params.script)));
     app.listen(port, () => console.log(`app listening on port ${port}`));
 }
