@@ -1,0 +1,85 @@
+<html>
+    <head>
+        <title> Across ↔️ </title>
+        <script src="../across.js"></script>
+    </head>
+    <body>
+        <h1> Across ↔️ </h1>
+        <blockquote>
+            Across standard allows different scripts within the same web application to communicate with each other by passing messages between one another securely
+            <p>
+                <a href="https://github.com/weizman/across">📖 Technical explanation</a>
+                <br>
+                <a href="https://github.com/weizman/across">⚙️ Installation and usage</a>
+                <br>
+                <a href="https://github.com/weizman/across">👩🏽‍💻 Source Code </a>
+                <br>
+                <a href="https://github.com/weizman/across">💪🏻 Motivation behind this project </a>
+            </p>
+        </blockquote>
+
+        <h1> Demo 🧐 </h1>
+        <blockquote>
+            <h3><i>~ Can you bypass Across?</i></h3>
+            <li>In this website there are two scripts that use Across to securely communicate with each other</li>
+
+            <li>Script <code style="color: blue">sender</code> sends a message to script <code style="color: green">receiver</code>, and script <code style="color: green">receiver</code> alerts that message ONLY if it really was sent by script <code style="color: blue">sender</code></li>
+
+            <li>Try to do anything in your power to successfully send a message to <code style="color: green">receiver</code> and make it believe that your message was really sent by script <code style="color: blue">sender</code></li>
+
+            <li>To do so, you'd have to upload a script somewhere and paste its URL in the bottom line (Across only respects scripts that are loaded externally before DOM finished loading)</li>
+
+            <li>For demonstration purposes, by default <code style="color: red">sender-fake</code> is loaded and is also trying to send a message to <code style="color: green">receiver</code>, but the latter successfully  rejects it for not really being <code style="color: blue">sender</code></li>
+
+            <li>Click the button to execute your code (<code>⌘ + ↵</code> / <code>^ + ↵</code> will work too)</li>
+
+            <li>If you succeed - Congratz! You bypassed Across (please, <a href="https://github.com/weizman/across/issues/new?title=Across+can+be+bypassed+with+...&body=Reproduce+by+running+<ENTER_POC_CODE_HERE>"> open an issue</a>, we'd love to improve its security)</li>
+            <br>
+            <button id="bt"> Run (<code>⌘ + ↵</code> / <code>^ + ↵</code>)</button>
+        </blockquote>
+
+
+        <br><br>
+
+        <input id="ta" style="width: 700px;">
+
+        <br><br>
+
+        <blockquote>
+            Funded by <a href="https://github.com/consensys">Consensys 💙</a>
+            <br>
+            Maintained and developed by <a href="https://github.com/MetaMask">MetaMask 🦊</a>
+            <br>
+            Invented and developed by <a href="https://weizman.github.io/">Gal Weizman 👋🏻</a>
+        </blockquote>
+
+        <script>
+            ACROSS()
+
+            ta.value = JSON.parse(localStorage.code || '""') || `file:///Users/weizman/Documents/weizman/ssc-mm/demo/sender-fake.js`;
+
+            bt.addEventListener('click', () => {
+                const val = JSON.stringify(ta.value);
+                if (val === localStorage.code) {
+                    return
+                }
+                localStorage.code = val;
+                location.reload()
+            });
+
+            window.addEventListener('keydown', (event) => {
+                if ((event.ctrlKey || event.metaKey) && event.code === 'Enter') {
+                    bt.click();
+                }
+            })
+        </script>
+        <script src="receiver.js"></script>
+        <script src="sender.js"></script>
+        <script>
+            (function(){
+                const script = document.createElement('script', ta.value);
+                document.head.appendChild(script);
+            }())
+        </script>
+    </body>
+</html>
