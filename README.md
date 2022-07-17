@@ -19,7 +19,7 @@ is its core added values:
 2. **was not tampered** by any other entity.
 3. **was not read** by any other entity.
 
-## install
+## Install
 
 The latest `across` [production version](https://raw.githubusercontent.com/weizman/across/main/across.prod.js) is included in the official repo
 and also in [upkg cdn](https://unpkg.com/@weizman/across/across.prod.js), so in order to
