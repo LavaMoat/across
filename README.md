@@ -119,3 +119,13 @@ If you found a vulnerability in `across`, open a PR with a test that demonstrate
 
 Help with promoting any of the topics above is very much appreciated in order for this project
 to become production ready and reshape how browser scripts can communicate with one another!
+
+## Supporters
+
+Funded by [Consensys 💙](https://github.com/consensys)
+
+Maintained and developed by [MetaMask 🦊](https://github.com/MetaMask)
+
+Invented and developed by [Gal Weizman 👋🏻](https://weizman.github.io/)
+
+Runs on [Securely 🔒](https://github.com/weizman/securely) and [Snow ❄️](https://github.com/weizman/snow)
