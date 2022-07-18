@@ -6,7 +6,7 @@
 
 * [Test](/ACROSS_WEBSITE) `Across` for yourself with this live demo!
 * [Learn](/ACROSS_WEBSITE) more about the motivation behind `Across`
-* `Across` is still experimental ⚠️ - your [help](#Contribute) is highly appreciated!
+* `Across` is still experimental ⚠️ - your [help](#contribute) is highly appreciated!
 
 This capability obviously already exists (by reading/writing from/to `window`), however the edge `Across` brings 
 is its core added values:

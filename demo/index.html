@@ -1,6 +1,7 @@
 <html>
     <head>
-        <title> Across ↔️ </title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>↔️</text></svg>">
+        <title> Across </title>
         <script src="../across.js"></script>
     </head>
     <body>
@@ -58,14 +59,14 @@
         <script>
             ACROSS()
 
-            ta.value = JSON.parse(localStorage.code || '""') || `file:///Users/weizman/Documents/weizman/ssc-mm/demo/sender-fake.js`;
+            ta.value = JSON.parse(localStorage.code_across || '""') || `file:///Users/weizman/Documents/weizman/ssc-mm/demo/sender-fake.js`;
 
             bt.addEventListener('click', () => {
                 const val = JSON.stringify(ta.value);
-                if (val === localStorage.code) {
+                if (val === localStorage.code_across) {
                     return
                 }
-                localStorage.code = val;
+                localStorage.code_across = val;
                 location.reload()
             });
 
