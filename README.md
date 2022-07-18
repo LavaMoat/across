@@ -4,8 +4,8 @@
 
 `Across` standard allows different scripts within the same web application to communicate with each other by passing messages between one another securely.
 
-* [Test](/ACROSS_WEBSITE) `Across` for yourself with this live demo!
-* [Learn](/ACROSS_WEBSITE) more about the motivation behind `Across`
+* [Test](https://weizman.github.io/across/demo/) `Across` for yourself with this live demo!
+* [Learn](https://github.com/weizman/across/wiki/Introducing-Across) more about the motivation behind `Across`
 * `Across` is still experimental ⚠️ - your [help](#contribute) is highly appreciated!
 
 This capability obviously already exists (by reading/writing from/to `window`), however the edge `Across` brings 

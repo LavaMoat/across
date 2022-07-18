@@ -1,10 +1,9 @@
 {
-  "name": "across",
+  "name": "@weizman/across",
   "version": "1.0.0",
   "description": "across",
   "main": "src/index.js",
   "devDependencies": {
-    "express": "4.17.2",
     "@babel/core": "^7.13.15",
     "@babel/preset-env": "^7.13.15",
     "@wdio/cli": "^7.5.3",
@@ -13,6 +12,7 @@
     "@wdio/spec-reporter": "^7.5.3",
     "babel-loader": "^8.2.2",
     "chromedriver": "^102.0.0",
+    "express": "4.17.2",
     "wdio-chromedriver-service": "^7.0.0",
     "webpack": "^5.33.2",
     "webpack-cli": "^4.6.0"
@@ -30,9 +30,12 @@
   },
   "keywords": [],
   "author": "",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/weizman/across/issues"
   },
-  "homepage": "https://weizman.github.io/across-website/"
+  "homepage": "https://weizman.github.io/across/",
+  "dependencies": {
+    "@weizman/snow": "^1.0.0"
+  }
 }

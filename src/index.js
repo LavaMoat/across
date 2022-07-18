@@ -1,4 +1,4 @@
-const glaze = require('@weizman/snow');
+const snow = require('@weizman/snow');
 const protect = require('./protect');
 
 let securely;
@@ -30,7 +30,7 @@ function onmessage(cb) {
 
 module.exports = function init() {
     Object.defineProperty(document, 'onmessage', {value: onmessage});
-    glaze((win, securelyAPI) => {
+    snow((win, securelyAPI) => {
         securely = securely || securelyAPI;
         securely(() => protect(win, securely, (s) => securely(() => scripts.pushS(s))));
     });

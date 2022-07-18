@@ -1,6 +1,6 @@
 (function(){
     document.onmessage((src, msg) => {
-        if (src === 'file:///Users/weizman/Documents/weizman/ssc-mm/demo/sender.js') {
+        if (src === 'https://weizman.github.io/across/demo/sender.js') {
             alert(`Got a trusted message from "${src}": \n\n` + msg);
         }
     })

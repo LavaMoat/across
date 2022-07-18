@@ -6,31 +6,6 @@
 
 Here's why I find this interesting, and how this model was able to come to live:
 
-* [Unlocking Secure Messaging Between Scripts](#Unlocking-Secure-Messaging-Between-Scripts)
-    * [Understanding secure messaging between windows first](#Understanding-secure-messaging-between-windows-first)
-    * [The importance of providing a builtin cross windows messaging API](#The-importance-of-providing-a-builtin-cross-windows-messaging-API)
-    * [Why do we need secure cross windows communication?](#Why-do-we-need-secure-cross-windows-communication?)
-    * [Can you trust the integrity of cross windows communication?](#Can-you-trust-the-integrity-of-cross-windows-communication?)
-    * [What about secure messaging between scripts?](#What-about-secure-messaging-between-scripts?)
-        * [Isolation](#1-Isolation)
-        * [Communication](#1-Communication)
-        * [Integrity](#1-Integrity)
- * [Allowing Communication Relationship Of Scripts Securely](#Allowing-Communication-Relationship-Of-Scripts-Securely) 
- * [Across Technically Explained](#Across-Technically-Explained)
-     * [Securely](#securely)
-     * [Snow](#snow)
-     * [document.currentScript](#document.currentScript)
-     * [disable script src property resetting](#disable-script-src-property-resetting)
- * [Unlocking possibilities with Across](#Unlocking-possibilities-with-Across)
-     * [Privileges management of in browser APIs consumption](#Privileges-management-of-in-browser-APIs-consumption)
-         * [localStorage separation per script](#localStorage-separation-per-script)
-         * [window.ethereum access to allowed scripts only](#window.ethereum-access-to-allowed-scripts-only)
-     * [Third party vendors clientside collaboration](#Third-party-vendors-clientside-collaboration)
-     * [Anything!](#Anything!)
- * [Is it production ready?](#Is-it-production-ready?)
-     * [Reach out!](#Reach-out!)
-
-
 # Unlocking Secure Messaging Between Scripts
 
 > tl;dr - Introducing `Across` which allows for the first time
@@ -158,7 +133,7 @@ information with one another securely, and by that I mean it makes sure that a m
 2. **was not tampered** by any other entity. 
 3. **was not read** by any other entity.
 
-(Taken from [`Across` Core Values section](https://github.com/weizman/across/blob/master/README.md#core-values))
+(Taken from [`Across` Core Values section](https://github.com/weizman/across/blob/main/README.md#core-values))
 
 Thus allowing scripts to communicate with one another the same way windows can when they use `window.postMessage`!
 
