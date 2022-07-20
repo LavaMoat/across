@@ -9,13 +9,13 @@
         <blockquote>
             Across standard allows different scripts within the same web application to communicate with each other by passing messages between one another securely
             <p>
-                <a href="https://github.com/weizman/across/wiki/Introducing-Across#across-technically-explained">📖 Technical explanation</a>
+                <a href="https://github.com/lavamoat/across/wiki/Introducing-Across#across-technically-explained">📖 Technical explanation</a>
                 <br>
-                <a href="https://github.com/weizman/across#install">⚙️ Installation and usage</a>
+                <a href="https://github.com/lavamoat/across#install">⚙️ Installation and usage</a>
                 <br>
-                <a href="https://github.com/weizman/across">👩🏽‍💻 Source Code </a>
+                <a href="https://github.com/lavamoat/across">👩🏽‍💻 Source Code </a>
                 <br>
-                <a href="https://github.com/weizman/across/wiki/Introducing-Across">💪🏻 Motivation behind this project </a>
+                <a href="https://github.com/lavamoat/across/wiki/Introducing-Across">💪🏻 Motivation behind this project </a>
             </p>
         </blockquote>
 
@@ -34,7 +34,7 @@
 
             <li>Click the button to execute your code (<code>⌘ + ↵</code> / <code>^ + ↵</code> will work too)</li>
 
-            <li>If you succeed - Congratz! You bypassed Across (please, <a href="https://github.com/weizman/across/issues/new?title=Across+can+be+bypassed+with+...&body=Reproduce+by+running+<ENTER_POC_CODE_HERE>"> open an issue</a>, we'd love to improve its security)</li>
+            <li>If you succeed - Congratz! You bypassed Across (please, <a href="https://github.com/lavamoat/across/issues/new?title=Across+can+be+bypassed+with+...&body=Reproduce+by+running+<ENTER_POC_CODE_HERE>"> open an issue</a>, we'd love to improve its security)</li>
             <br>
             <button id="bt"> Run (<code>⌘ + ↵</code> / <code>^ + ↵</code>)</button>
         </blockquote>
@@ -53,13 +53,13 @@
             <br>
             Invented and developed by <a href="https://weizman.github.io/">Gal Weizman 👋🏻</a>
             <br>
-            Runs on <a href="https://github.com/weizman/snow">Snow ❄️</a> and <a href="https://github.com/weizman/securely">Securely 🔒️</a>
+            Runs on <a href="https://github.com/lavamoat/snow">Snow ❄️</a> and <a href="https://github.com/lavamoat/securely">Securely 🔒️</a>
         </blockquote>
 
         <script>
             ACROSS()
 
-            ta.value = JSON.parse(localStorage.code_across || '""') || `https://weizman.github.io/across/demo/sender-fake.js`;
+            ta.value = JSON.parse(localStorage.code_across || '""') || `https://lavamoat.github.io/across/demo/sender-fake.js`;
 
             bt.addEventListener('click', () => {
                 const val = JSON.stringify(ta.value);

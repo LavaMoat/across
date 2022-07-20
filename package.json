@@ -26,15 +26,15 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/weizman/across.git"
+    "url": "git+https://github.com/lavamoat/across.git"
   },
   "keywords": [],
   "author": "",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/weizman/across/issues"
+    "url": "https://github.com/lavamoat/across/issues"
   },
-  "homepage": "https://weizman.github.io/across/",
+  "homepage": "https://lavamoat.github.io/across/",
   "dependencies": {
     "@weizman/snow": "^1.0.0"
   }
