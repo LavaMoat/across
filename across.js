@@ -466,7 +466,7 @@ module.exports = hookLoadSetters;
 
 const {getArguments} = __webpack_require__(845);
 
-// https://github.com/weizman/snow/issues/2
+// https://github.com/lavamoat/snow/issues/2
 const ISSUE_2_SOLVED = false;
 
 function hookOpen(win, cb) {

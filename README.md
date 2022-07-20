@@ -4,8 +4,8 @@
 
 `Across` standard allows different scripts within the same web application to communicate with each other by passing messages between one another securely.
 
-* [Test](https://weizman.github.io/across/demo/) `Across` for yourself with this live demo!
-* [Learn](https://github.com/weizman/across/wiki/Introducing-Across) more about the motivation behind `Across`
+* [Test](https://lavamoat.github.io/across/demo/) `Across` for yourself with this live demo!
+* [Learn](https://github.com/lavamoat/across/wiki/Introducing-Across) more about the motivation behind `Across`
 * `Across` is still experimental ⚠️ - your [help](#contribute) is highly appreciated!
 
 This capability obviously already exists (by reading/writing from/to `window`), however the edge `Across` brings 
@@ -21,7 +21,7 @@ is its core added values:
 
 ## Install
 
-The latest `across` [production version](https://raw.githubusercontent.com/weizman/across/main/across.prod.js) is included in the official repo
+The latest `across` [production version](https://raw.githubusercontent.com/lavamoat/across/main/across.prod.js) is included in the official repo
 and also in [upkg cdn](https://unpkg.com/@weizman/across/across.prod.js), so in order to
 install `across` in the website, simply place it wherever and serve it to the website as-is:
 
@@ -128,4 +128,4 @@ Maintained and developed by [MetaMask 🦊](https://github.com/MetaMask)
 
 Invented and developed by [Gal Weizman 👋🏻](https://weizman.github.io/)
 
-Runs on [Securely 🔒](https://github.com/weizman/securely) and [Snow ❄️](https://github.com/weizman/snow)
+Runs on [Securely 🔒](https://github.com/lavamoat/securely) and [Snow ❄️](https://github.com/lavamoat/snow)
