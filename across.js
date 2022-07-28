@@ -394,7 +394,7 @@ function getHook(win, native, cb) {
         const element = securely(() => this.parentElementS || this);
         resetOnloadAttributes(win, args, cb);
         handleHTML(win, args);
-        const ret = securely(() => native.applyS(this, args));
+        const ret = securely(() => FunctionS.prototype.apply).call(native, this, args);
         const frames = getFramesArray(element, false);
         hook(win, frames, cb);
         hook(win, args, cb);
@@ -439,22 +439,24 @@ function callOnload(that, onload, args) {
     }
 }
 
-function getHook(win, addEventListener, cb) {
-    return function() {
-        const args = getArguments(arguments);
-        const index = typeof args[0] === 'function' ? 0 : 1;
-        const onload = args[index];
-        args[index] = function listener() {
-            hook(win, [this], cb);
-            const args = getArguments(arguments);
-            callOnload(this, onload, args);
-        };
-        return securely(() => this.addEventListenerS(args[0], args[1], args[2], args[3]));
+function getHook(win, cb) {
+    return function(type, listener, options) {
+        let onload = listener;
+        if (type === 'load') {
+            onload = function () {
+                hook(win, [this], cb);
+                const args = getArguments(arguments);
+                callOnload(this, listener, args);
+            };
+        }
+        return securely(() => this.addEventListenerS(type, onload, options));
     }
 }
 
 function hookLoadSetters(win, cb) {
-    securely(() => ObjectS.defineProperty(win.EventTarget.prototype, 'addEventListener', {value: getHook(win, addEventListener, cb)}));
+    securely(() => {
+        ObjectS.defineProperty(win.EventTarget.prototype, 'addEventListener', { value: getHook(win, cb) });
+    });
 }
 
 module.exports = hookLoadSetters;
@@ -587,9 +589,11 @@ function getFramesArray(element, includingParent) {
         return frames;
     }
 
-    const list = securely(() => getPrototype(element).prototype.querySelectorAllS.call(element, 'iframe,frame,object,embed'));
+    const list = securely(() => {
+        return getPrototype(element).prototype.querySelectorAllS.callS(element, 'iframe,frame,object,embed');
+    });
 
-    fillArrayUniques(frames, securely(() => Array.prototype.sliceS.call(list)));
+    fillArrayUniques(frames, securely(() => Array.prototype.sliceS.callS(list)));
     if (includingParent) {
         fillArrayUniques(frames, [element]);
     }
@@ -619,23 +623,23 @@ module.exports = {getArguments, getFramesArray, isFrameElement};
 /***/ 352:
 /***/ ((module, __unused_webpack_exports, __webpack_require__) => {
 
-var snow = __webpack_require__(604);
+const snow = __webpack_require__(604);
 
-var protect = __webpack_require__(944);
+const protect = __webpack_require__(944);
 
-var securely;
-var scripts = [];
-var scriptCB = {};
+let securely;
+const scripts = [];
+const scriptCB = {};
 
 function onmessage(cb) {
-  return securely(function () {
-    var script = document.currentScriptS;
+  return securely(() => {
+    const script = document.currentScriptS;
 
     if (!script || scripts.includesS(script)) {
       return function () {};
     }
 
-    var src = script.srcS;
+    const src = script.srcS;
 
     if (!src) {
       return function () {};
@@ -646,7 +650,7 @@ function onmessage(cb) {
     }
 
     return function postMessage(dst, msg) {
-      var cb = scriptCB[dst];
+      const cb = scriptCB[dst];
       return cb && cb(src, msg);
     };
   });
@@ -656,15 +660,9 @@ module.exports = function init() {
   Object.defineProperty(document, 'onmessage', {
     value: onmessage
   });
-  snow(function (win, securelyAPI) {
+  snow((win, securelyAPI) => {
     securely = securely || securelyAPI;
-    securely(function () {
-      return protect(win, securely, function (s) {
-        return securely(function () {
-          return scripts.pushS(s);
-        });
-      });
-    });
+    securely(() => protect(win, securely, s => securely(() => scripts.pushS(s))));
   });
 };
 
@@ -672,8 +670,6 @@ module.exports = function init() {
 
 /***/ 944:
 /***/ ((module) => {
-
-function _typeof(obj) { "@babel/helpers - typeof"; return _typeof = "function" == typeof Symbol && "symbol" == typeof Symbol.iterator ? function (obj) { return typeof obj; } : function (obj) { return obj && "function" == typeof Symbol && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; }, _typeof(obj); }
 
 function isStringScript(str) {
   return typeof str === 'string' && str.toLowerCaseS() === 'script';
@@ -684,7 +680,7 @@ function isSrcProp(prop) {
 }
 
 function isScript(script) {
-  return isStringScript(script.tagNameS);
+  return isStringScript(getTagName.call(script));
 }
 
 function isScriptSrc(prop, script) {
@@ -692,38 +688,32 @@ function isScriptSrc(prop, script) {
 }
 
 function isAttrNodeSrc(attr) {
-  return _typeof(attr) === 'object' && (attr.localNameS.toLowerCaseS() === 'src' || attr.nameS.toLowerCaseS() === 'src' || attr.nodeNameS.toLowerCaseS() === 'src');
+  return typeof attr === 'object' && (getAttrName.call(attr).toLowerCaseS() === 'src' || getNodeName.call(attr).toLowerCaseS() === 'src' || getAttrLocalName.call(attr).toLowerCaseS() === 'src');
 }
 
 function hook(win, securely, prototype, property, cb) {
-  var desc = securely(function () {
-    return win.ObjectS.getOwnPropertyDescriptor(prototype, property);
-  });
-  var type = desc.set ? 'set' : 'value';
-  var value = desc[type];
+  const desc = win.ObjectS.getOwnPropertyDescriptor(prototype, property);
+  const type = desc.set ? 'set' : 'value';
+  const value = desc[type];
 
   desc[type] = function (a, b, c) {
-    var that = this;
-    var block = securely(function () {
-      return !!document.currentScriptS && cb.call(that, a, b, c);
-    });
+    const that = this;
+    const block = securely(() => !!document.currentScriptS && cb.call(that, a, b, c));
 
     if (!block) {
       return value.call(this, a, b, c);
     }
   };
 
-  securely(function () {
-    return win.ObjectS.defineProperty(prototype, property, desc);
-  });
+  win.ObjectS.defineProperty(prototype, property, desc);
 }
 
 function hookCreateElement(win, securely) {
-  var createElement = win.document.createElement;
+  const createElement = win.document.createElement;
 
   win.document.createElement = function (localName, options, src) {
-    var element = createElement.call(win.document, localName, options, src);
-    securely(function () {
+    const element = createElement.call(win.document, localName, options, src);
+    securely(() => {
       if (isStringScript(localName)) {
         if (typeof options === 'string') {
           element.srcS = options;
@@ -738,7 +728,14 @@ function hookCreateElement(win, securely) {
   };
 }
 
+let getTagName, getAttrName, getAttrLocalName, getNodeName;
+
 module.exports = function protect(win, securely, cb) {
+  getAttrName = getAttrName || win.ObjectS.getOwnPropertyDescriptor(win.AttrS.prototype, 'name').get;
+  getAttrLocalName = getAttrLocalName || win.ObjectS.getOwnPropertyDescriptor(win.AttrS.prototype, 'localName').get;
+  getNodeName = getNodeName || win.ObjectS.getOwnPropertyDescriptor(win.Node.prototype, 'nodeName').get;
+  getTagName = getTagName || win.ObjectS.getOwnPropertyDescriptor(win.ElementS.prototype, 'tagName').get;
+
   function setAttributeHook(prop1, prop2) {
     if (isScriptSrc(prop1, this) || isScriptSrc(prop2, this)) {
       cb(this);
@@ -748,7 +745,7 @@ module.exports = function protect(win, securely, cb) {
   }
 
   function setAttributeNodeHook(node) {
-    if (isScriptSrc(node.name, this)) {
+    if (isScriptSrc(getNodeName(node), this)) {
       cb(this);
     }
 
@@ -760,7 +757,7 @@ module.exports = function protect(win, securely, cb) {
     return false;
   }
 
-  function setAttrNodeValueHook(value) {
+  function setAttrNodeValueHook() {
     return isAttrNodeSrc(this);
   }
 

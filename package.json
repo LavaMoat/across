@@ -1,6 +1,6 @@
 {
   "name": "@weizman/across",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "across",
   "main": "src/index.js",
   "devDependencies": {
