@@ -1,6 +1,6 @@
 {
   "name": "@weizman/across",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "across",
   "main": "src/index.js",
   "devDependencies": {
@@ -36,6 +36,6 @@
   },
   "homepage": "https://lavamoat.github.io/across/",
   "dependencies": {
-    "@weizman/snow": "^1.0.0"
+    "@weizman/snow": "^1.0.3"
   }
 }
