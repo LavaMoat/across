@@ -7,7 +7,7 @@ function isSrcProp(prop) {
 }
 
 function isScript(script) {
-    return isStringScript(script.tagNameS);
+    return isStringScript(getTagName.call(script));
 }
 
 function isScriptSrc(prop, script) {
@@ -16,14 +16,14 @@ function isScriptSrc(prop, script) {
 
 function isAttrNodeSrc(attr) {
     return typeof attr === 'object' && (
-        attr.localNameS.toLowerCaseS() === 'src' ||
-        attr.nameS.toLowerCaseS() === 'src' ||
-        attr.nodeNameS.toLowerCaseS() === 'src'
+        getAttrName.call(attr).toLowerCaseS() === 'src' ||
+        getNodeName.call(attr).toLowerCaseS() === 'src' ||
+        getAttrLocalName.call(attr).toLowerCaseS() === 'src'
     );
 }
 
 function hook(win, securely, prototype, property, cb) {
-    const desc = securely(() => win.ObjectS.getOwnPropertyDescriptor(prototype, property));
+    const desc = win.ObjectS.getOwnPropertyDescriptor(prototype, property);
     const type = desc.set ? 'set' : 'value';
     const value = desc[type];
     desc[type] = function(a, b, c) {
@@ -33,7 +33,7 @@ function hook(win, securely, prototype, property, cb) {
             return value.call(this, a, b, c);
         }
     }
-    securely(() => win.ObjectS.defineProperty(prototype, property, desc));
+    win.ObjectS.defineProperty(prototype, property, desc);
 }
 
 function hookCreateElement(win, securely) {
@@ -54,7 +54,14 @@ function hookCreateElement(win, securely) {
     }
 }
 
+let getTagName, getAttrName, getAttrLocalName, getNodeName;
+
 module.exports = function protect(win, securely, cb) {
+    getAttrName = getAttrName || win.ObjectS.getOwnPropertyDescriptor(win.AttrS.prototype, 'name').get;
+    getAttrLocalName = getAttrLocalName || win.ObjectS.getOwnPropertyDescriptor(win.AttrS.prototype, 'localName').get;
+    getNodeName = getNodeName || win.ObjectS.getOwnPropertyDescriptor(win.Node.prototype, 'nodeName').get;
+    getTagName = getTagName || win.ObjectS.getOwnPropertyDescriptor(win.ElementS.prototype, 'tagName').get;
+
     function setAttributeHook(prop1, prop2) {
         if (isScriptSrc(prop1, this) || isScriptSrc(prop2, this)) {
             cb(this);
@@ -63,7 +70,7 @@ module.exports = function protect(win, securely, cb) {
     }
 
     function setAttributeNodeHook(node) {
-        if (isScriptSrc(node.name, this)) {
+        if (isScriptSrc(getNodeName(node), this)) {
             cb(this);
         }
         return false;
@@ -74,7 +81,7 @@ module.exports = function protect(win, securely, cb) {
         return false;
     }
 
-    function setAttrNodeValueHook(value) {
+    function setAttrNodeValueHook() {
         return isAttrNodeSrc(this);
     }
 

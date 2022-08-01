@@ -38,6 +38,10 @@ describe('test communication works', async () => {
         await test('set-src', 'GOT NO MESSAGES');
     });
 
+    it('should fail to impersonate script legit by attempting to change properties across uses by polluting the proto chain', async () => {
+        await test('prototype-pollution', 'GOT NO MESSAGES');
+    });
+
     it('should fail to impersonate script legit by attempting to change current script src using setAttribute()', async () => {
         await test('set-attribute', 'GOT NO MESSAGES');
     });
