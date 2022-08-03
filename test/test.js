@@ -38,8 +38,12 @@ describe('test communication works', async () => {
         await test('set-src', 'GOT NO MESSAGES');
     });
 
-    it('should fail to impersonate script legit by attempting to change properties across uses by polluting the proto chain', async () => {
-        await test('prototype-pollution', 'GOT NO MESSAGES');
+    it('should fail to impersonate script legit by attempting to change properties across uses by polluting the proto chain (attribute)', async () => {
+        await test('prototype-pollution-attribute', 'GOT NO MESSAGES');
+    });
+
+    it('should fail to impersonate script legit by attempting to change properties across uses by polluting the proto chain (src)', async () => {
+        await test('prototype-pollution-src', 'GOT MESSAGE FROM SCRIPT "prototype-pollution-src" : PONG');
     });
 
     it('should fail to impersonate script legit by attempting to change current script src using setAttribute()', async () => {

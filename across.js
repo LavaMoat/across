@@ -686,16 +686,18 @@ const protect = __webpack_require__(944);
 let securely;
 const scripts = [];
 const scriptCB = {};
+let getSrc;
 
 function onmessage(cb) {
   return securely(() => {
+    getSrc = getSrc || ObjectS.getOwnPropertyDescriptor(HTMLScriptElementS.prototype, 'src').get;
     const script = document.currentScriptS;
 
     if (!script || scripts.includesS(script)) {
       return function () {};
     }
 
-    const src = script.srcS;
+    const src = getSrc.call(script);
 
     if (!src) {
       return function () {};
