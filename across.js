@@ -713,12 +713,14 @@ function onmessage(cb) {
 }
 
 module.exports = function init() {
+  let cb = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : () => {};
   Object.defineProperty(document, 'onmessage', {
     value: onmessage
   });
   snow((win, securelyAPI) => {
     securely = securely || securelyAPI;
     securely(() => protect(win, securely, s => securely(() => scripts.pushS(s))));
+    cb(win);
   });
 };
 

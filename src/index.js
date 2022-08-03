@@ -28,10 +28,11 @@ function onmessage(cb) {
     });
 }
 
-module.exports = function init() {
+module.exports = function init(cb = () => {}) {
     Object.defineProperty(document, 'onmessage', {value: onmessage});
     snow((win, securelyAPI) => {
         securely = securely || securelyAPI;
         securely(() => protect(win, securely, (s) => securely(() => scripts.pushS(s))));
+        cb(win);
     });
 }
