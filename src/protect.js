@@ -1,9 +1,11 @@
+const {Object, Attr, Element, Node, getDocumentCurrentScript, stringToLowerCase, setScriptSrc} = require('./natives')
+
 function isStringScript(str) {
-    return typeof str === 'string' && str.toLowerCaseS() === 'script';
+    return typeof str === 'string' && stringToLowerCase(str) === 'script';
 }
 
 function isSrcProp(prop) {
-    return typeof prop === 'string' && prop.toLowerCaseS() === 'src';
+    return typeof prop === 'string' && stringToLowerCase(str) === 'src';
 }
 
 function isScript(script) {
@@ -16,51 +18,49 @@ function isScriptSrc(prop, script) {
 
 function isAttrNodeSrc(attr) {
     return typeof attr === 'object' && (
-        getAttrName.call(attr).toLowerCaseS() === 'src' ||
-        getNodeName.call(attr).toLowerCaseS() === 'src' ||
-        getAttrLocalName.call(attr).toLowerCaseS() === 'src'
+        stringToLowerCase(getAttrName.call(attr)) === 'src' ||
+        stringToLowerCase(getNodeName.call(attr)) === 'src' ||
+        stringToLowerCase(getAttrLocalName.call(attr)) === 'src'
     );
 }
 
-function hook(win, securely, prototype, property, cb) {
-    const desc = win.ObjectS.getOwnPropertyDescriptor(prototype, property);
+function hook(win, prototype, property, cb) {
+    const desc = Object.getOwnPropertyDescriptor(prototype, property);
     const type = desc.set ? 'set' : 'value';
     const value = desc[type];
     desc[type] = function(a, b, c) {
         const that = this;
-        const block = securely(() => !!document.currentScriptS && cb.call(that, a, b, c));
+        const block = getDocumentCurrentScript(document) && cb.call(that, a, b, c);
         if (!block) {
             return value.call(this, a, b, c);
         }
     }
-    win.ObjectS.defineProperty(prototype, property, desc);
+    Object.defineProperty(prototype, property, desc);
 }
 
-function hookCreateElement(win, securely) {
+function hookCreateElement(win) {
     const createElement = win.document.createElement;
     win.document.createElement = function(localName, options, src) {
         const element = createElement.call(win.document, localName, options, src);
-        securely(() => {
-            if (isStringScript(localName)) {
-                if (typeof options === 'string') {
-                    element.srcS = options;
-                }
-                if (typeof src === 'string') {
-                    element.srcS = src;
-                }
+        if (isStringScript(localName)) {
+            if (typeof options === 'string') {
+                setScriptSrc(element, options);
             }
-        });
+            if (typeof src === 'string') {
+                setScriptSrc(element, src);
+            }
+        }
         return element;
     }
 }
 
 let getTagName, getAttrName, getAttrLocalName, getNodeName;
 
-module.exports = function protect(win, securely, cb) {
-    getAttrName = getAttrName || win.ObjectS.getOwnPropertyDescriptor(win.AttrS.prototype, 'name').get;
-    getAttrLocalName = getAttrLocalName || win.ObjectS.getOwnPropertyDescriptor(win.AttrS.prototype, 'localName').get;
-    getNodeName = getNodeName || win.ObjectS.getOwnPropertyDescriptor(win.Node.prototype, 'nodeName').get;
-    getTagName = getTagName || win.ObjectS.getOwnPropertyDescriptor(win.ElementS.prototype, 'tagName').get;
+module.exports = function protect(win, cb) {
+    getAttrName = getAttrName || Object.getOwnPropertyDescriptor(Attr.prototype, 'name').get;
+    getAttrLocalName = getAttrLocalName || Object.getOwnPropertyDescriptor(Attr.prototype, 'localName').get;
+    getNodeName = getNodeName || Object.getOwnPropertyDescriptor(Node.prototype, 'nodeName').get;
+    getTagName = getTagName || Object.getOwnPropertyDescriptor(Element.prototype, 'tagName').get;
 
     function setAttributeHook(prop1, prop2) {
         if (isScriptSrc(prop1, this) || isScriptSrc(prop2, this)) {
@@ -89,14 +89,14 @@ module.exports = function protect(win, securely, cb) {
         return isAttrNodeSrc(attr1) || isAttrNodeSrc(attr2);
     }
 
-    hook(win, securely, win.Element.prototype, 'setAttribute', setAttributeHook);
-    hook(win, securely, win.Element.prototype, 'setAttributeNS', setAttributeHook);
-    hook(win, securely, win.Element.prototype, 'setAttributeNode', setAttributeNodeHook);
-    hook(win, securely, win.Element.prototype, 'setAttributeNodeNS', setAttributeNodeHook);
-    hook(win, securely, win.HTMLScriptElement.prototype, 'src', setSrcHook);
-    hook(win, securely, win.Attr.prototype, 'value', setAttrNodeValueHook);
-    hook(win, securely, win.NamedNodeMap.prototype, 'setNamedItem', setNamedItemHook);
-    hook(win, securely, win.NamedNodeMap.prototype, 'setNamedItemNS', setNamedItemHook);
+    hook(win, win.Element.prototype, 'setAttribute', setAttributeHook);
+    hook(win, win.Element.prototype, 'setAttributeNS', setAttributeHook);
+    hook(win, win.Element.prototype, 'setAttributeNode', setAttributeNodeHook);
+    hook(win, win.Element.prototype, 'setAttributeNodeNS', setAttributeNodeHook);
+    hook(win, win.HTMLScriptElement.prototype, 'src', setSrcHook);
+    hook(win, win.Attr.prototype, 'value', setAttrNodeValueHook);
+    hook(win, win.NamedNodeMap.prototype, 'setNamedItem', setNamedItemHook);
+    hook(win, win.NamedNodeMap.prototype, 'setNamedItemNS', setNamedItemHook);
 
-    hookCreateElement(win, securely);
+    hookCreateElement(win);
 }
