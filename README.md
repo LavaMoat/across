@@ -128,4 +128,4 @@ Maintained and developed by [MetaMask 🦊](https://github.com/MetaMask)
 
 Invented and developed by [Gal Weizman 👋🏻](https://weizman.github.io/)
 
-Runs on [Securely 🔒](https://github.com/lavamoat/securely) and [Snow ❄️](https://github.com/lavamoat/snow)
+Runs on [Snow ❄️](https://github.com/lavamoat/snow)
