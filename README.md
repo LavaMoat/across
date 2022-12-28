@@ -22,11 +22,11 @@ is its core added values:
 ## Install
 
 The latest `across` [production version](https://raw.githubusercontent.com/lavamoat/across/main/across.prod.js) is included in the official repo
-and also in [upkg cdn](https://unpkg.com/@weizman/across/across.prod.js), so in order to
+and also in [upkg cdn](https://unpkg.com/@lavamoat/across/across.prod.js), so in order to
 install `across` in the website, simply place it wherever and serve it to the website as-is:
 
 ```html
-<script src="https://unpkg.com/@weizman/across/across.prod.js"></script>
+<script src="https://unpkg.com/@lavamoat/across/across.prod.js"></script>
 <script>
     // apply Across by running:
     ACROSS();
@@ -38,11 +38,11 @@ Make sure this runs first - any javascript that runs before `Across` can easily 
 `ACROSS` API can also be required as part of a bundle instead of a script tag:
 
 ```
-yarn add @weizman/across
+yarn add @lavamoat/across
 ```
 
 ```javascript
-const across = require('@weizman/across');
+const across = require('@lavamoat/across');
 across(); // remember to call Across in order for it to apply
 ```
 
