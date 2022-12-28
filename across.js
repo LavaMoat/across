@@ -1078,7 +1078,7 @@ function isStringScript(str) {
   return typeof str === 'string' && stringToLowerCase(str) === 'script';
 }
 function isSrcProp(prop) {
-  return typeof prop === 'string' && stringToLowerCase(str) === 'src';
+  return typeof prop === 'string' && stringToLowerCase(prop) === 'src';
 }
 function isScript(script) {
   return isStringScript(getTagName.call(script));

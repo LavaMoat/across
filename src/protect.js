@@ -5,7 +5,7 @@ function isStringScript(str) {
 }
 
 function isSrcProp(prop) {
-    return typeof prop === 'string' && stringToLowerCase(str) === 'src';
+    return typeof prop === 'string' && stringToLowerCase(prop) === 'src';
 }
 
 function isScript(script) {
