@@ -987,6 +987,7 @@ function natives(win) {
       Array,
       Element,
       Attr,
+      String,
       Node,
       HTMLScriptElement
     } = win;
@@ -995,6 +996,7 @@ function natives(win) {
       Array,
       Element,
       Attr,
+      String,
       Node,
       HTMLScriptElement
     };
@@ -1013,6 +1015,7 @@ function setup(win) {
     Array,
     Element,
     Attr,
+    String,
     Node,
     HTMLScriptElement
   } = bag;
@@ -1027,6 +1030,7 @@ function setup(win) {
     Array,
     Element,
     Attr,
+    String,
     Node,
     stringToLowerCase,
     getDocumentCurrentScript,
